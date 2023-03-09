@@ -125,6 +125,8 @@ namespace CaseManagementSystem.MVVM.ViewModels
             {
                 Comments = await CommentsService.GetComments(SelectedCase);
                 await CommentsService.DeleteComment(SelectedComment, Comments);
+
+                DeleteButtonVisible = false;
             }
 
         }

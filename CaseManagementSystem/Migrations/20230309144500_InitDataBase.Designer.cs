@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CaseManagementSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230306121339_InitDatabase")]
-    partial class InitDatabase
+    [Migration("20230309144500_InitDataBase")]
+    partial class InitDataBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

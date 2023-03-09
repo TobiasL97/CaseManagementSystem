@@ -14,11 +14,13 @@ namespace CaseManagementSystem.MVVM.ViewModels
 {
     partial class UserViewModel : ObservableObject
     {
-        
+
 
         public UserViewModel()
         {
-            _ = CaseTypeService.CheckDataBase();
+            
+            _ = CaseTypeService.CheckCaseTypeDataBase();
+            _ = StatusService.CheckStatusDataBase();
             _ = LoadCaseTypeAsync();
         }
 

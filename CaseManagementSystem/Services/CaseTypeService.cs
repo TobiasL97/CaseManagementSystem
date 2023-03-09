@@ -23,13 +23,22 @@ namespace CaseManagementSystem.Services
             return await _context.CaseTypes.ToListAsync();
         }
 
-        public static async Task CheckDataBase()
+        public static async Task CheckCaseTypeDataBase()
         {
             var caseTypes = _context.CaseTypes;
             if (caseTypes.IsNullOrEmpty())
             {
-                CaseTypeEntity caseType = new();
-                caseType.TypeOfCase = "Repair Work";
+                var CaseTypeList = new List<CaseTypeEntity>
+                {
+                    new CaseTypeEntity { TypeOfCase = "Repair Work" },
+                    new CaseTypeEntity { TypeOfCase = "Service" },
+                    new CaseTypeEntity { TypeOfCase = "Troubleshooting" },
+                    new CaseTypeEntity { TypeOfCase = "Other" },
+                    
+                };
+
+                await caseTypes.AddRangeAsync(CaseTypeList);
+
             }
 
             await _context.SaveChangesAsync();

@@ -3,6 +3,7 @@ using CaseManagementSystem.MVVM.Models;
 using CaseManagementSystem.MVVM.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,18 @@ namespace CaseManagementSystem.Services
         public static async Task<IEnumerable<CaseTypeEntity>> GetAllCaseTypes()
         {
             return await _context.CaseTypes.ToListAsync();
+        }
+
+        public static async Task CheckDataBase()
+        {
+            var caseTypes = _context.CaseTypes;
+            if (caseTypes.IsNullOrEmpty())
+            {
+                CaseTypeEntity caseType = new();
+                caseType.TypeOfCase = "Repair Work";
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

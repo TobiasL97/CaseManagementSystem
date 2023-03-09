@@ -18,6 +18,7 @@ namespace CaseManagementSystem.MVVM.ViewModels
 
         public UserViewModel()
         {
+            _ = CaseTypeService.CheckDataBase();
             _ = LoadCaseTypeAsync();
         }
 

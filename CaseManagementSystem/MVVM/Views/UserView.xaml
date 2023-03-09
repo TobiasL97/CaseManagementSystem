@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="CaseManagementSystem.MVVM.Views.UserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CaseManagementSystem.MVVM.Views"
+             xmlns:viewmodel="clr-namespace:CaseManagementSystem.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodel:UserViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <Grid Margin="10 0 0 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="100 0 0 0" Grid.ColumnSpan="2">
+            <Label Grid.Column="0" FontSize="16" Content="Select what you need help with: " Margin="0 0 0 20"/>
+            <ComboBox ItemsSource="{Binding Casetypes}" SelectedItem="{Binding SelectedCaseType}" Grid.Column="0"  VerticalAlignment="Top" Margin="0 0 0 20">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding TypeOfCase}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label Content="First name:"/>
+            <TextBox Text="{Binding Tb_FirstName}" Padding="10" Margin="0 0 0 20"/>
+
+            <Label Content="Last name:"/>
+            <TextBox Text="{Binding Tb_LastName}" Padding="10" Margin="0 0 0 20"/>
+
+            <Label Content="Email:"/>
+            <TextBox Text="{Binding Tb_Email}" Padding="10" Margin="0 0 0 20"/>
+
+            <Label Content="Phone number:"/>
+            <TextBox Text="{Binding Tb_PhoneNumber}" Padding="10" Margin="0 0 0 20"/>
+
+            <Label Content="Description:"/>
+            <TextBox Text="{Binding Tb_Description}" Padding="10" Margin="0 0 0 20"/>
+
+        </StackPanel>
+
+        <Button Grid.Column="1" Content="Send" Command="{Binding AddCaseCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="20 5 20 5"/>
+
+
+    </Grid>
+</UserControl>

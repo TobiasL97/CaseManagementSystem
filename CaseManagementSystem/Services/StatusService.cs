@@ -15,11 +15,15 @@ namespace CaseManagementSystem.Services
     {
         private static DataContext _context = new();
 
+        #region Methods
+
+        // Hämtar alla statusar från status-databasen
         public static async Task<IEnumerable<StatusEntity>> GetAllStatus()
         {
             return await _context.Status.ToListAsync();
         }
 
+        // Kollar om databasen innehar några värden, om inte så läggs det till tre värden
         public static async Task CheckStatusDataBase()
         {
             var status = _context.Status;
@@ -27,9 +31,9 @@ namespace CaseManagementSystem.Services
             {
                 var statusList = new List<StatusEntity>
                 {
-                    new StatusEntity { Status = "Not started" },
-                    new StatusEntity { Status = "Ongoing" },
-                    new StatusEntity { Status = "Completed" },
+                    new StatusEntity { Status = "Ej Påbörjad" },
+                    new StatusEntity { Status = "Pågående" },
+                    new StatusEntity { Status = "Avslutad" },
                 };
 
                 await status.AddRangeAsync(statusList);
@@ -38,5 +42,7 @@ namespace CaseManagementSystem.Services
 
             await _context.SaveChangesAsync();
         }
+
+        #endregion
     }
 }

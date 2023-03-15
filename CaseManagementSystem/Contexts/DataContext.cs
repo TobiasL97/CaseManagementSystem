@@ -12,7 +12,7 @@ namespace CaseManagementSystem.Contexts
     internal class DataContext : DbContext
     {
 
-        private readonly string _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\tobbe\Documents\kod-tester\CaseManagementSystem\CaseManagementSystem\Contexts\CaseDataBase.mdf;Integrated Security=True;Connect Timeout=30";
+        private readonly string _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\tobbe\Documents\kod-tester\CaseManagementSystem\CaseManagementSystem\Contexts\CaseDatabase.mdf;Integrated Security=True;Connect Timeout=30";
 
         public DataContext()
         {

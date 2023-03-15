@@ -18,11 +18,15 @@ namespace CaseManagementSystem.Services
     {
         private static DataContext _context = new();
 
+        #region Methods
+
+        // Hämtar alla ärendetyper från CaseTypes-databasen
         public static async Task<IEnumerable<CaseTypeEntity>> GetAllCaseTypes()
         {
             return await _context.CaseTypes.ToListAsync();
         }
 
+        // Kollar om databasen är tom, är databasen tom så skapas fyra ärendetyper
         public static async Task CheckCaseTypeDataBase()
         {
             var caseTypes = _context.CaseTypes;
@@ -30,10 +34,10 @@ namespace CaseManagementSystem.Services
             {
                 var CaseTypeList = new List<CaseTypeEntity>
                 {
-                    new CaseTypeEntity { TypeOfCase = "Repair Work" },
+                    new CaseTypeEntity { TypeOfCase = "Reparation" },
                     new CaseTypeEntity { TypeOfCase = "Service" },
-                    new CaseTypeEntity { TypeOfCase = "Troubleshooting" },
-                    new CaseTypeEntity { TypeOfCase = "Other" },
+                    new CaseTypeEntity { TypeOfCase = "Felsökning" },
+                    new CaseTypeEntity { TypeOfCase = "Annat" },
                     
                 };
 
@@ -43,5 +47,8 @@ namespace CaseManagementSystem.Services
 
             await _context.SaveChangesAsync();
         }
+
+        #endregion
+
     }
 }

@@ -17,6 +17,9 @@ namespace CaseManagementSystem.Services
     {
         private static readonly DataContext _context = new();
 
+        #region Methods
+
+        // Skapar en ny CommentEntity och lägger till den i kommentarslistan och i kommentarsdatabasen
         public static async void NewComment(string comment, CaseEntity selectedCase, ObservableCollection<CommentEntity> comments)
         {
             var _comment = new CommentEntity { Comment = comment, CaseId = selectedCase.Id };
@@ -28,6 +31,7 @@ namespace CaseManagementSystem.Services
 
         }
 
+        // Hämtar alla kommentarer där caseId matchar selectedCase.Id
         public static async Task<ObservableCollection<CommentEntity>> GetComments(CaseEntity selectedcase)
         {
             var items = new ObservableCollection<CommentEntity>();
@@ -39,6 +43,7 @@ namespace CaseManagementSystem.Services
             return items;
         }
 
+        // Tar bort kommentaren om Selectedcomment.Id matchar comment.Id
         public static async Task DeleteComment(CommentEntity selectedComment, ObservableCollection<CommentEntity> comments)
         {
             var _comments = comments;
@@ -53,5 +58,8 @@ namespace CaseManagementSystem.Services
                 }
             }
         }
+
+        #endregion
+
     }
 }

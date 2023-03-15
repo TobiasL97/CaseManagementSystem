@@ -27,6 +27,12 @@ namespace CaseManagementSystem.MVVM.ViewModels
             CurrentViewModel = new CaseViewModel();
         }
 
+        [RelayCommand]
+        private void FinishedCaseView()
+        {
+            CurrentViewModel = new FinishedCasesViewModel();
+        }
+
         public MainViewModel()
         {
             CurrentViewModel = new UserViewModel();

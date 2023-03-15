@@ -16,14 +16,18 @@ namespace CaseManagementSystem.MVVM.ViewModels
 {
     partial class CaseViewModel : ObservableObject
     {
+        private static DataContext _context = new();
 
         public CaseViewModel()
         {
             _ = LoadCasesAsync();
+
         }
 
+        #region Properties
+
         [ObservableProperty]
-        public IEnumerable<CaseEntity> cases = null!;
+        public ObservableCollection<CaseEntity> cases = null!;
 
         [ObservableProperty]
         public ObservableCollection<CommentEntity> comments = null!;
@@ -46,6 +50,18 @@ namespace CaseManagementSystem.MVVM.ViewModels
         [ObservableProperty]
         public bool emptySubmitTextVisible = false;
 
+        [ObservableProperty]
+        public bool finishCaseButtonVisible = false;
+
+        [ObservableProperty]
+        public bool startCaseButtonVisible = false;
+
+        [ObservableProperty]
+        public string tb_Comment = string.Empty;
+
+        [ObservableProperty]
+        public string tb_EmptySubmitText = string.Empty;
+
         private CaseEntity _selectedCase = null!;
         public CaseEntity SelectedCase
         {
@@ -57,7 +73,10 @@ namespace CaseManagementSystem.MVVM.ViewModels
                 ListViewVisible = true;
                 SubmitButtonVisible = true;
                 CommentFieldVisible = true;
+                FinishCaseButtonVisible = false;
+                StartCaseButtonVisible = true;
                 _ = LoadCommentsAsync();
+                CaseButtonsVisibility();
             }
         }
 
@@ -77,25 +96,41 @@ namespace CaseManagementSystem.MVVM.ViewModels
             }
         }
 
+        #endregion
 
-        [ObservableProperty]
-        public string tb_Comment = string.Empty;
 
-        [ObservableProperty]
-        public string tb_EmptySubmitText = string.Empty;
+        #region Methods
 
-        public async Task LoadCasesAsync()
+        // Visar knappen för att avsluta ett ärende om ett ärende är valt och ärendet har statusId 2/pågående
+        public void CaseButtonsVisibility()
         {
-            Cases = await CaseService.GetAllCases();
+            if(SelectedCase != null && SelectedCase.StatusId == 2)
+            {
+                FinishCaseButtonVisible = true;
+                StartCaseButtonVisible = false;
+            }
         }
 
+        // Hämtar alla Ärenden som inte är avslutade
+        public async Task LoadCasesAsync()
+        {
+            Cases = await CaseService.GetAllFinishedCases();
+        }
+
+        // Hämtar alla kommentarer till det valda ärendet
         public async Task LoadCommentsAsync()
         {
            Comments = await CommentsService.GetComments(SelectedCase);
         }
 
+        #endregion
+
+
+        #region Buttons
         [RelayCommand]
-        public async Task SubmitComment()
+
+        // Lägger till en kommentar till det valda ärendet om kommentarsfältet är ifyllt
+        public async Task SubmitCommentAsync()
         {
             if (SelectedCase != null)
             {
@@ -113,13 +148,15 @@ namespace CaseManagementSystem.MVVM.ViewModels
                 else
                 {
                     EmptySubmitTextVisible = true;
-                    Tb_EmptySubmitText = "You must enter a comment to submit!";
+                    Tb_EmptySubmitText = "Kan inte lägga till en tom kommentar!";
                 }
             }
         }
 
         [RelayCommand]
-        public async Task DeleteComment()
+
+        // Tar bort en kommentar från det valda ärendet
+        public async Task DeleteCommentAsync()
         {
             if(SelectedComment != null)
             {
@@ -130,5 +167,25 @@ namespace CaseManagementSystem.MVVM.ViewModels
             }
 
         }
+
+        [RelayCommand]
+
+        // Startar ett ärende
+        public async Task StartCaseAsync()
+        {
+            await CaseService.StartCase(SelectedCase);
+            SelectedCase = await CaseService.FetchLatestSelectedCase(SelectedCase);
+        }
+
+        [RelayCommand]
+        public async Task FinishCaseAsync()
+        {
+            await CaseService.FinishCase(SelectedCase);
+            SelectedCase = await CaseService.FetchLatestSelectedCase(SelectedCase);
+            StartCaseButtonVisible = false;
+        }
+
+        #endregion
+
     }
 }

@@ -24,6 +24,8 @@ namespace CaseManagementSystem.MVVM.ViewModels
             _ = LoadCaseTypeAsync();
         }
 
+        #region Properties
+
         [ObservableProperty]
         public CaseTypeEntity selectedCaseType = null!;
 
@@ -45,12 +47,24 @@ namespace CaseManagementSystem.MVVM.ViewModels
         [ObservableProperty]
         public string tb_Description = string.Empty;
 
+        #endregion
+
+
+        #region Methods
+
+        // Hämtar alla ärendetyper
         private async Task LoadCaseTypeAsync()
         {
             Casetypes = await CaseTypeService.GetAllCaseTypes();
         }
 
+        #endregion
+
+
+        #region Buttons
         [RelayCommand]
+
+        // Lägger till ett nytt ärende
         private async Task AddCase()
         {
             UserModel user = new UserModel();
@@ -64,7 +78,16 @@ namespace CaseManagementSystem.MVVM.ViewModels
 
             await CaseService.NewCase(user);
 
+            Tb_FirstName = string.Empty;
+            Tb_LastName = string.Empty;
+            Tb_Email = string.Empty;
+            Tb_PhoneNumber = string.Empty;
+            Tb_Description = string.Empty;
+
+            SelectedCaseType = null!;
         }
+
+        #endregion
 
     }
 }

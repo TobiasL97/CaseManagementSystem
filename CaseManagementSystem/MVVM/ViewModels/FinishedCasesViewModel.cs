@@ -26,6 +26,8 @@ namespace CaseManagementSystem.MVVM.ViewModels
 
 
         #region Methods
+
+        // Hämtar alla färdiga ärenden
         public async Task LoadFinishedCasesAsync()
         {
             FinishedCases = await CaseService.GetAllFinishedCases();

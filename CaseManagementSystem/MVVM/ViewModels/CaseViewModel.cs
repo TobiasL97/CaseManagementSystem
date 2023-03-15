@@ -114,7 +114,7 @@ namespace CaseManagementSystem.MVVM.ViewModels
         // Hämtar alla Ärenden som inte är avslutade
         public async Task LoadCasesAsync()
         {
-            Cases = await CaseService.GetAllFinishedCases();
+            Cases = await CaseService.GetAllCases();
         }
 
         // Hämtar alla kommentarer till det valda ärendet

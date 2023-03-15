@@ -8,12 +8,24 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:FinishedCasesViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="10">
         <ListView ItemsSource="{Binding FinishedCases}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding User.FirstName}"/>
+                        <TextBlock>
+                            <Run Text="Ärende ID: "/>
+                            <Run Text="{Binding Id}" />
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Användare: " Margin="0 0 10 0"/>
+                            <TextBlock Text="{Binding User.FirstName}" Margin="0 0 5 0"/>
+                            <TextBlock Text="{Binding User.LastName}" Margin="0 0 30 0"/>
+                            <TextBlock Text="Ärendetyp: " Margin="0 0 5 0"/>
+                            <TextBlock Text="{Binding CaseType.TypeOfCase}" Margin="0 0 30 0"/>
+                            <TextBlock Text="Status: " Margin="0 0 10 0"/>
+                            <TextBlock Text="{Binding Status.Status}"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
